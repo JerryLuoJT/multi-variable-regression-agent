@@ -1,0 +1,3 @@
+# Preserve the UCI source files byte-for-byte and suppress text whitespace checks.
+data/communities_and_crime/communities.data binary
+data/communities_and_crime/communities.names binary

@@ -7,3 +7,4 @@ checkpoints/
 venv/
 .venv/
 quant.py
+outputs/

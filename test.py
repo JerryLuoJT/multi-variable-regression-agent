@@ -1,14 +1,15 @@
-"""Quick local smoke test; the assertions live in test/test_regression_agent.py."""
+"""Quick offline smoke test for the ReAct workflow."""
 
-from main import run_agent
+from main import run_agent, summary
 
 
 if __name__ == "__main__":
     result = run_agent(
         "test/test.csv",
         target_variable="target",
-        selected_variables=["x1", "x2", "category"],
+        candidate_variables=["x1", "x2", "category"],
+        use_llm=False,
     )
-    print(result["feedback"])
-    if not result["passed_mse_gate"]:
-        raise SystemExit(2)
+    print(summary(result))
+    if result.get("error"):
+        raise SystemExit(1)

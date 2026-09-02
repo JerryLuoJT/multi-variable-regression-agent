@@ -1,40 +1,44 @@
-"""Shared state passed between the regression agent's LangGraph nodes."""
+"""State schema for the tool-driven ReAct regression agent."""
 
-from typing import Any, Dict, List, TypedDict
+from typing import Annotated, Any, Dict, List, TypedDict
+
+from langgraph.graph.message import add_messages
 
 
 class ModelState(TypedDict, total=False):
+    messages: Annotated[List[Any], add_messages]
+    project_background: str
     user_query: str
     file_location: str
-    data_location: str  # Backwards-compatible alias.
     target_variable: str
-    selected_variables: List[str]
+    candidate_variables: List[str]
     use_llm: bool
+    result_dir: str
 
     data_frame: Any
     train_data: Any
     validation_data: Any
     test_data: Any
     column_info: Dict[str, str]
-    context_analysis: str
 
-    fitted_model: Any
-    feature_columns: List[str]
-    X_train: Any
-    X_validation: Any
-    X_test: Any
-    y_train: Any
-    y_validation: Any
-    y_test: Any
+    active_candidate: Any
+    completed_candidates: List[Dict[str, Any]]
+    discarded_attempts: List[Dict[str, Any]]
+    attempted_feature_sets: List[List[str]]
+    total_attempts: int
 
-    metrics: Dict[str, float]
-    coefficient_table: Any
-    feedback: str
-    mse_threshold: float
-    passed_mse_gate: bool
-    candidate_passed: bool
-    retry_exhausted: bool
-    iteration_count: int
-    max_iterations: int
-    attempt_history: List[Dict[str, Any]]
-    failure_reasons: List[str]
+    tool_call_history: List[Dict[str, Any]]
+    decision_log: List[Dict[str, Any]]
+    tool_call_count: int
+    max_tool_calls: int
+
+    best_candidate_id: int
+    ranking: List[int]
+    comparison_explanation: str
+    recommended_variables: List[str]
+    risks: List[str]
+    comparison_mode: str
+
+    final_test_metrics: Dict[str, float]
+    test_plot_path: str
+    error: str
