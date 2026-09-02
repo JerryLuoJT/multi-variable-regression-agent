@@ -1,0 +1,7 @@
+langgraph==1.1.10
+langchain-google-genai==4.2.2
+numpy>=2.0,<3.0
+pandas>=2.2,<3.0
+scikit-learn>=1.6,<2.0
+statsmodels>=0.14,<1.0
+pytest>=8.0,<10.0
